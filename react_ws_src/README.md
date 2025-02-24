@@ -1,7 +1,9 @@
 # A simple example of a full website built with React.js stack
+
 ## React development source and testing
 
 Major libraries used:
+
 - react
 - webpack
 - babel
@@ -15,36 +17,43 @@ Major libraries used:
 ##For demonstration purposes only.
 
 ---
+
 ---
 
 ### Getting Started
 
 Install all the packages
 
-~~~bash
+```bash
 npm install
-~~~
+```
 
-To start the development web server use the following command and turn your browser to [http://localhost:3000](http://localhost:3000) or [http://0.0.0.0:3000](http://0.0.0.0:3000) 
+To start the development web server use the following command and turn your browser to [http://localhost:3000](http://localhost:3000) or [http://0.0.0.0:3000](http://0.0.0.0:3000)
 
-~~~bash
+```bash
 npm start
-~~~
+```
 
 To run code lint
 
-~~~bash
+```bash
 npm run lint
-~~~
+```
 
 To run code tests
 
-~~~bash
+```bash
 npm run test
-~~~
+```
 
-To build the site 
+To build the site
 
-~~~bash
+```bash
 npm run build
-~~~
+```
+
+## Changes
+
+- Node v6.17.1 for compatibility reasons
+- Downgraded node-sass to v4.0.0 for compatibility
+- Clean up console errors
