@@ -293,6 +293,8 @@ export default class SetName extends Component {
           </table>
         </div>
 
+        <div>{this.display_hint(this.hint)}</div>
+
         <button
           type="submit"
           onClick={this.end_game.bind(this)}
@@ -304,6 +306,19 @@ export default class SetName extends Component {
         </button>
       </div>
     );
+  }
+
+  display_hint() {
+    if (this.state.hint) {
+      setTimeout(() => {
+        this.setState({
+          hint: undefined,
+        });
+      }, 1000);
+      return `Choose ${this.state.hint} ;)`;
+    } else {
+      return null;
+    }
   }
 
   //	------------------------	------------------------	------------------------
@@ -382,6 +397,7 @@ export default class SetName extends Component {
     this.state.cell_vals = cell_vals;
 
     this.check_turn();
+    this.setState({ hint: this.get_hint("x") });
   }
 
   //	------------------------	------------------------	------------------------
@@ -411,6 +427,7 @@ export default class SetName extends Component {
     this.state.cell_vals = cell_vals;
 
     this.check_turn();
+    this.setState({ hint: this.get_hint("o") });
   }
 
   //	------------------------	------------------------	------------------------
@@ -437,6 +454,7 @@ export default class SetName extends Component {
     this.state.cell_vals = cell_vals;
 
     this.check_turn();
+    this.setState({ hint: this.get_hint("x") });
   }
 
   //	------------------------	------------------------	------------------------
@@ -514,5 +532,31 @@ export default class SetName extends Component {
         this.handleCellClickOrPress(cell);
       }
     };
+  }
+
+  get_hint(player) {
+    let { cell_vals, game_play } = this.state;
+
+    if (!game_play) {
+      return undefined;
+    }
+
+    for (const set of this.win_sets) {
+      let count = 0;
+      let hintCell = undefined;
+      for (const cell of set) {
+        if (cell_vals[cell] === player) {
+          count++;
+        } else {
+          hintCell = cell;
+        }
+      }
+
+      if (count === 2 && cell_vals[hintCell] === undefined) {
+        return hintCell;
+      }
+    }
+
+    return undefined;
   }
 }
