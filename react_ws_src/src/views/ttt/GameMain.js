@@ -12,6 +12,16 @@ export default class SetName extends Component {
   constructor(props) {
     super(props);
 
+    let rawScoreboard = window.localStorage.getItem(
+      app.settings.curr_user.name
+    );
+
+    let scoreboard = {};
+
+    if (rawScoreboard) {
+      scoreboard = JSON.parse(rawScoreboard);
+    }
+
     this.win_sets = [
       ["c1", "c2", "c3"],
       ["c4", "c5", "c6"],
@@ -31,6 +41,7 @@ export default class SetName extends Component {
         next_turn_ply: true,
         game_play: true,
         game_stat: "Start game",
+        scoreboard: scoreboard,
       };
     else {
       this.sock_start();
@@ -40,6 +51,7 @@ export default class SetName extends Component {
         next_turn_ply: true,
         game_play: false,
         game_stat: "Connecting",
+        scoreboard: scoreboard,
       };
     }
   }
@@ -130,6 +142,20 @@ export default class SetName extends Component {
     return (
       <div id="GameMain">
         <h1>Play {this.props.game_type}</h1>
+
+        {this.state.scoreboard && (
+          <div>
+            <div>{`Wins: ${
+              this.state.scoreboard.wins ? this.state.scoreboard.wins : 0
+            }`}</div>
+            <div>{`Draws: ${
+              this.state.scoreboard.draws ? this.state.scoreboard.draws : 0
+            }`}</div>
+            <div>{`Losses: ${
+              this.state.scoreboard.losses ? this.state.scoreboard.losses : 0
+            }`}</div>
+          </div>
+        )}
 
         <div id="game_stat">
           <div id="game_stat_msg">{this.state.game_stat}</div>
@@ -484,6 +510,12 @@ export default class SetName extends Component {
 
     // win && console.log('win set: ', set)
 
+    const scoreboard = {
+      wins: this.state.scoreboard.wins ? this.state.scoreboard.wins : 0,
+      draws: this.state.scoreboard.draws ? this.state.scoreboard.draws : 0,
+      losses: this.state.scoreboard.losses ? this.state.scoreboard.losses : 0,
+    };
+
     if (win) {
       this.refs[set[0]].classList.add("win");
       this.refs[set[1]].classList.add("win");
@@ -497,12 +529,20 @@ export default class SetName extends Component {
         game_play: false,
       });
 
+      if (cell_vals[set[0]] == "x") {
+        scoreboard.wins++;
+      } else {
+        scoreboard.losses++;
+      }
+
       this.socket && this.socket.disconnect();
     } else if (fin) {
       this.setState({
         game_stat: "Draw",
         game_play: false,
       });
+
+      scoreboard.draws++;
 
       this.socket && this.socket.disconnect();
     } else {
@@ -514,6 +554,11 @@ export default class SetName extends Component {
         next_turn_ply: !this.state.next_turn_ply,
       });
     }
+
+    window.localStorage.setItem(
+      app.settings.curr_user.name,
+      JSON.stringify(scoreboard)
+    );
   }
 
   //	------------------------	------------------------	------------------------
