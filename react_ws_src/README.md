@@ -54,6 +54,8 @@ npm run build
 
 ## Changes
 
-- Node v6.17.1 for compatibility reasons
-- Downgraded node-sass to v4.0.0 for compatibility
+- Node v6.17.1 for compatibility reasons. This version was released around the same time the repository had various commits. Higher versions of Node may work, however this version allowed me to refrain from using --force commands when updating packages. In a production environment, I would update all the packages to relevant secure versions, as a lot of these are redundant and deprecated.
+
+- Downgraded node-sass to v4.0.0 for compatibility.
 - Clean up console errors
+- Added ARIA labels and some keyboard functionality for visually impaired users. Tested with MacOS VoiceOver.

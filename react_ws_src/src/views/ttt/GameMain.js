@@ -6,6 +6,7 @@ import TweenMax from "gsap";
 
 import rand_arr_elem from "../../helpers/rand_arr_elem";
 import rand_to_fro from "../../helpers/rand_to_fro";
+import isCellSelected from "../../helpers/isCellSelected";
 
 export default class SetName extends Component {
   constructor(props) {
@@ -124,7 +125,7 @@ export default class SetName extends Component {
 
   render() {
     const { cell_vals } = this.state;
-    // console.log(cell_vals)
+    console.log(cell_vals);
 
     return (
       <div id="GameMain">
@@ -147,6 +148,13 @@ export default class SetName extends Component {
                   id="game_board-c1"
                   ref="c1"
                   onClick={this.click_cell.bind(this)}
+                  onKeyDown={this.handle_key_press("c1").bind(this)}
+                  aria-label={`Cell 1 - ${isCellSelected(
+                    "c1",
+                    this.state.cell_vals
+                  )}`}
+                  role="button"
+                  tabIndex="0"
                 >
                   {" "}
                   {this.cell_cont("c1")}{" "}
@@ -155,7 +163,14 @@ export default class SetName extends Component {
                   id="game_board-c2"
                   ref="c2"
                   onClick={this.click_cell.bind(this)}
+                  onKeyDown={this.handle_key_press("c2").bind(this)}
                   className="vbrd"
+                  aria-label={`Cell 2 - ${isCellSelected(
+                    "c2",
+                    this.state.cell_vals
+                  )}`}
+                  role="button"
+                  tabIndex="0"
                 >
                   {" "}
                   {this.cell_cont("c2")}{" "}
@@ -164,6 +179,13 @@ export default class SetName extends Component {
                   id="game_board-c3"
                   ref="c3"
                   onClick={this.click_cell.bind(this)}
+                  onKeyDown={this.handle_key_press("c3").bind(this)}
+                  aria-label={`Cell 3 - ${isCellSelected(
+                    "c3",
+                    this.state.cell_vals
+                  )}`}
+                  role="button"
+                  tabIndex="0"
                 >
                   {" "}
                   {this.cell_cont("c3")}{" "}
@@ -174,7 +196,14 @@ export default class SetName extends Component {
                   id="game_board-c4"
                   ref="c4"
                   onClick={this.click_cell.bind(this)}
+                  onKeyDown={this.handle_key_press("c4").bind(this)}
                   className="hbrd"
+                  aria-label={`Cell 4 - ${isCellSelected(
+                    "c4",
+                    this.state.cell_vals
+                  )}`}
+                  role="button"
+                  tabIndex="0"
                 >
                   {" "}
                   {this.cell_cont("c4")}{" "}
@@ -183,7 +212,14 @@ export default class SetName extends Component {
                   id="game_board-c5"
                   ref="c5"
                   onClick={this.click_cell.bind(this)}
+                  onKeyDown={this.handle_key_press("c5").bind(this)}
                   className="vbrd hbrd"
+                  aria-label={`Cell 5 - ${isCellSelected(
+                    "c5",
+                    this.state.cell_vals
+                  )}`}
+                  role="button"
+                  tabIndex="0"
                 >
                   {" "}
                   {this.cell_cont("c5")}{" "}
@@ -192,7 +228,14 @@ export default class SetName extends Component {
                   id="game_board-c6"
                   ref="c6"
                   onClick={this.click_cell.bind(this)}
+                  onKeyDown={this.handle_key_press("c6").bind(this)}
                   className="hbrd"
+                  aria-label={`Cell 6 - ${isCellSelected(
+                    "c6",
+                    this.state.cell_vals
+                  )}`}
+                  role="button"
+                  tabIndex="0"
                 >
                   {" "}
                   {this.cell_cont("c6")}{" "}
@@ -203,6 +246,13 @@ export default class SetName extends Component {
                   id="game_board-c7"
                   ref="c7"
                   onClick={this.click_cell.bind(this)}
+                  onKeyDown={this.handle_key_press("c7").bind(this)}
+                  aria-label={`Cell 7 - ${isCellSelected(
+                    "c7",
+                    this.state.cell_vals
+                  )}`}
+                  role="button"
+                  tabIndex="0"
                 >
                   {" "}
                   {this.cell_cont("c7")}{" "}
@@ -211,7 +261,14 @@ export default class SetName extends Component {
                   id="game_board-c8"
                   ref="c8"
                   onClick={this.click_cell.bind(this)}
+                  onKeyDown={this.handle_key_press("c8").bind(this)}
                   className="vbrd"
+                  aria-label={`Cell 8 - ${isCellSelected(
+                    "c8",
+                    this.state.cell_vals
+                  )}`}
+                  role="button"
+                  tabIndex="0"
                 >
                   {" "}
                   {this.cell_cont("c8")}{" "}
@@ -220,6 +277,13 @@ export default class SetName extends Component {
                   id="game_board-c9"
                   ref="c9"
                   onClick={this.click_cell.bind(this)}
+                  onKeyDown={this.handle_key_press("c9").bind(this)}
+                  aria-label={`Cell 9 - ${isCellSelected(
+                    "c9",
+                    this.state.cell_vals
+                  )}`}
+                  role="button"
+                  tabIndex="0"
                 >
                   {" "}
                   {this.cell_cont("c9")}{" "}
@@ -249,13 +313,18 @@ export default class SetName extends Component {
     // console.log(e.currentTarget.id.substr(11))
     // console.log(e.currentTarget)
 
-    if (!this.state.next_turn_ply || !this.state.game_play) return;
-
     const cell_id = e.currentTarget.id.substr(11);
-    if (this.state.cell_vals[cell_id]) return;
 
-    if (this.props.game_type != "live") this.turn_ply_comp(cell_id);
-    else this.turn_ply_live(cell_id);
+    this.handleCellClickOrPress(cell_id);
+  }
+
+  handleCellClickOrPress(cellId) {
+    if (!this.state.next_turn_ply || !this.state.game_play || !cellId) return;
+
+    if (this.state.cell_vals[cellId]) return;
+
+    if (this.props.game_type != "live") this.turn_ply_comp(cellId);
+    else this.turn_ply_live(cellId);
   }
 
   //	------------------------	------------------------	------------------------
@@ -435,5 +504,15 @@ export default class SetName extends Component {
     this.socket && this.socket.disconnect();
 
     this.props.onEndGame();
+  }
+
+  // -------------------------- --------------------------- -----------------------
+
+  handle_key_press(cell) {
+    return (event) => {
+      if (event.key === "Enter") {
+        this.handleCellClickOrPress(cell);
+      }
+    };
   }
 }
