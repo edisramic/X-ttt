@@ -295,6 +295,52 @@ export default class SetName extends Component {
 
   //	------------------------	------------------------	------------------------
 
+  // Outdated version of node, webpack and babel. No async compatibility, needs updating.
+  // async aiMove() {
+  //   const apiKey = "";
+
+  //   const prompt = `
+  //   Tic Tac Toe game with current board:
+  //   ${JSON.stringify(cell_vals)}
+  //   Based on this board, what is the best next move for O?
+  // `;
+
+  //   const response = await fetch(
+  //     "https://api-inference.huggingface.co/models/gpt2",
+  //     {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: `Bearer ${apiKey}`,
+  //       },
+  //       body: JSON.stringify({
+  //         inputs: prompt,
+  //         parameters: {
+  //           max_length: 5,
+  //           num_return_sequences: 1,
+  //         },
+  //       }),
+  //     }
+  //   );
+
+  //   const data = await response.json();
+  //   const c = data[0].generated_text.trim();
+
+  //   cell_vals[c] = "o";
+
+  //   TweenMax.from(this.refs[c], 0.7, {
+  //     opacity: 0,
+  //     scaleX: 0,
+  //     scaleY: 0,
+  //     ease: Power4.easeOut,
+  //   });
+
+  //   this.state.cell_vals = cell_vals;
+
+  //   this.check_turn();
+  //   this.setState({ hint: this.get_hint("x") });
+  // }
+
   turn_comp() {
     let { cell_vals } = this.state;
     let empty_cells_arr = [];

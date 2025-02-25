@@ -61,6 +61,12 @@ npm run build
 
 ### Features
 
+**Versus AI**:
+
+- Sends the gameboard to an AI model, HuggingFace in this instance - AI determines the computers next move.
+- Issues with Node versions, as this version of Node doesn't support async/await - I have parked this feature.
+- Increases difficulty of the game. Model selects relevant cell to either win or block opposing player from winning, rather than selecting an empty cell randomly.
+
 **Accessibility**:
 
 - Added ARIA labels and some keyboard functionality for visually impaired users. Tested with MacOS VoiceOver.
@@ -84,4 +90,4 @@ npm run build
 - Update deprecated packages and replace certain packages/functions with modern tech.
 - Typescript support.
 - Consistent casing convention across project.
--
+- CSS scoping.
