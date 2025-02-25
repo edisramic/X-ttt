@@ -8,6 +8,12 @@ import rand_arr_elem from "../../helpers/rand_arr_elem";
 import rand_to_fro from "../../helpers/rand_to_fro";
 import isCellSelected from "../../helpers/isCellSelected";
 
+const cells = [
+  ["c1", "c2", "c3"],
+  ["c4", "c5", "c6"],
+  ["c7", "c8", "c9"],
+];
+
 export default class SetName extends Component {
   constructor(props) {
     super(props);
@@ -42,6 +48,7 @@ export default class SetName extends Component {
         game_play: true,
         game_stat: "Start game",
         scoreboard: scoreboard,
+        showHint: false,
       };
     else {
       this.sock_start();
@@ -52,6 +59,7 @@ export default class SetName extends Component {
         game_play: false,
         game_stat: "Connecting",
         scoreboard: scoreboard,
+        showHint: false,
       };
     }
   }
@@ -136,214 +144,104 @@ export default class SetName extends Component {
   //	------------------------	------------------------	------------------------
 
   render() {
-    const { cell_vals } = this.state;
-    console.log(cell_vals);
-
     return (
-      <div id="GameMain">
-        <h1>Play {this.props.game_type}</h1>
-
-        {this.state.scoreboard && (
-          <div>
-            <div>{`Wins: ${
-              this.state.scoreboard.wins ? this.state.scoreboard.wins : 0
-            }`}</div>
-            <div>{`Draws: ${
-              this.state.scoreboard.draws ? this.state.scoreboard.draws : 0
-            }`}</div>
-            <div>{`Losses: ${
-              this.state.scoreboard.losses ? this.state.scoreboard.losses : 0
-            }`}</div>
-          </div>
-        )}
-
-        <div id="game_stat">
-          <div id="game_stat_msg">{this.state.game_stat}</div>
-          {this.state.game_play && (
-            <div id="game_turn_msg">
-              {this.state.next_turn_ply ? "Your turn" : "Opponent turn"}
-            </div>
-          )}
-        </div>
-
+      <div id="GameMain" className="game_container">
         <div id="game_board">
           <table>
             <tbody>
-              <tr>
-                <td
-                  id="game_board-c1"
-                  ref="c1"
-                  onClick={this.click_cell.bind(this)}
-                  onKeyDown={this.handle_key_press("c1").bind(this)}
-                  aria-label={`Cell 1 - ${isCellSelected(
-                    "c1",
-                    this.state.cell_vals
-                  )}`}
-                  role="button"
-                  tabIndex="0"
-                >
-                  {" "}
-                  {this.cell_cont("c1")}{" "}
-                </td>
-                <td
-                  id="game_board-c2"
-                  ref="c2"
-                  onClick={this.click_cell.bind(this)}
-                  onKeyDown={this.handle_key_press("c2").bind(this)}
-                  className="vbrd"
-                  aria-label={`Cell 2 - ${isCellSelected(
-                    "c2",
-                    this.state.cell_vals
-                  )}`}
-                  role="button"
-                  tabIndex="0"
-                >
-                  {" "}
-                  {this.cell_cont("c2")}{" "}
-                </td>
-                <td
-                  id="game_board-c3"
-                  ref="c3"
-                  onClick={this.click_cell.bind(this)}
-                  onKeyDown={this.handle_key_press("c3").bind(this)}
-                  aria-label={`Cell 3 - ${isCellSelected(
-                    "c3",
-                    this.state.cell_vals
-                  )}`}
-                  role="button"
-                  tabIndex="0"
-                >
-                  {" "}
-                  {this.cell_cont("c3")}{" "}
-                </td>
-              </tr>
-              <tr>
-                <td
-                  id="game_board-c4"
-                  ref="c4"
-                  onClick={this.click_cell.bind(this)}
-                  onKeyDown={this.handle_key_press("c4").bind(this)}
-                  className="hbrd"
-                  aria-label={`Cell 4 - ${isCellSelected(
-                    "c4",
-                    this.state.cell_vals
-                  )}`}
-                  role="button"
-                  tabIndex="0"
-                >
-                  {" "}
-                  {this.cell_cont("c4")}{" "}
-                </td>
-                <td
-                  id="game_board-c5"
-                  ref="c5"
-                  onClick={this.click_cell.bind(this)}
-                  onKeyDown={this.handle_key_press("c5").bind(this)}
-                  className="vbrd hbrd"
-                  aria-label={`Cell 5 - ${isCellSelected(
-                    "c5",
-                    this.state.cell_vals
-                  )}`}
-                  role="button"
-                  tabIndex="0"
-                >
-                  {" "}
-                  {this.cell_cont("c5")}{" "}
-                </td>
-                <td
-                  id="game_board-c6"
-                  ref="c6"
-                  onClick={this.click_cell.bind(this)}
-                  onKeyDown={this.handle_key_press("c6").bind(this)}
-                  className="hbrd"
-                  aria-label={`Cell 6 - ${isCellSelected(
-                    "c6",
-                    this.state.cell_vals
-                  )}`}
-                  role="button"
-                  tabIndex="0"
-                >
-                  {" "}
-                  {this.cell_cont("c6")}{" "}
-                </td>
-              </tr>
-              <tr>
-                <td
-                  id="game_board-c7"
-                  ref="c7"
-                  onClick={this.click_cell.bind(this)}
-                  onKeyDown={this.handle_key_press("c7").bind(this)}
-                  aria-label={`Cell 7 - ${isCellSelected(
-                    "c7",
-                    this.state.cell_vals
-                  )}`}
-                  role="button"
-                  tabIndex="0"
-                >
-                  {" "}
-                  {this.cell_cont("c7")}{" "}
-                </td>
-                <td
-                  id="game_board-c8"
-                  ref="c8"
-                  onClick={this.click_cell.bind(this)}
-                  onKeyDown={this.handle_key_press("c8").bind(this)}
-                  className="vbrd"
-                  aria-label={`Cell 8 - ${isCellSelected(
-                    "c8",
-                    this.state.cell_vals
-                  )}`}
-                  role="button"
-                  tabIndex="0"
-                >
-                  {" "}
-                  {this.cell_cont("c8")}{" "}
-                </td>
-                <td
-                  id="game_board-c9"
-                  ref="c9"
-                  onClick={this.click_cell.bind(this)}
-                  onKeyDown={this.handle_key_press("c9").bind(this)}
-                  aria-label={`Cell 9 - ${isCellSelected(
-                    "c9",
-                    this.state.cell_vals
-                  )}`}
-                  role="button"
-                  tabIndex="0"
-                >
-                  {" "}
-                  {this.cell_cont("c9")}{" "}
-                </td>
-              </tr>
+              {cells.map((cellRow, index) => {
+                let cellIndex = 0;
+                return (
+                  <tr key={index}>
+                    {cellRow.map((cell) => {
+                      cellIndex++;
+                      return (
+                        <td
+                          key={cell}
+                          id={`game_board-${cell}`}
+                          ref={cell}
+                          onClick={this.click_cell.bind(this)}
+                          onKeyDown={this.handle_key_press(cell).bind(this)}
+                          aria-label={`Cell ${cellIndex} - ${isCellSelected(
+                            cell,
+                            this.state.cell_vals
+                          )}`}
+                          role="button"
+                          tabIndex="0"
+                          className={`cellBorder ${
+                            this.state.showHint && cell === this.state.hint
+                              ? "hint"
+                              : ""
+                          }`}
+                        >
+                          {" "}
+                          {this.cell_cont(cell)}{" "}
+                        </td>
+                      );
+                    })}
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
 
-        <div>{this.display_hint(this.hint)}</div>
+        <div className="game_actions">
+          <h1>Play {this.props.game_type}</h1>
 
-        <button
-          type="submit"
-          onClick={this.end_game.bind(this)}
-          className="button"
-        >
-          <span>
-            End Game <span className="fa fa-caret-right"></span>
-          </span>
-        </button>
+          <div id="game_stat">
+            <div id="game_stat_msg">{this.state.game_stat}</div>
+            {this.state.game_play && (
+              <div id="game_turn_msg">
+                {this.state.next_turn_ply ? "Your turn" : "Opponent turn"}
+              </div>
+            )}
+          </div>
+
+          {this.state.scoreboard && (
+            <div className="scoreboard">
+              <div>{`Wins: ${
+                this.state.scoreboard.wins ? this.state.scoreboard.wins : 0
+              }`}</div>
+              <div>{`Draws: ${
+                this.state.scoreboard.draws ? this.state.scoreboard.draws : 0
+              }`}</div>
+              <div>{`Losses: ${
+                this.state.scoreboard.losses ? this.state.scoreboard.losses : 0
+              }`}</div>
+            </div>
+          )}
+
+          <button
+            className="btn hintButton"
+            onClick={this.display_hint.bind(this)}
+            disabled={!this.state.hint}
+          >
+            Hint
+          </button>
+
+          <button
+            type="submit"
+            onClick={this.end_game.bind(this)}
+            className="btn"
+          >
+            <span>
+              End Game <span className="fa fa-caret-right"></span>
+            </span>
+          </button>
+        </div>
       </div>
     );
   }
 
   display_hint() {
+    this.setState({ showHint: true });
     if (this.state.hint) {
       setTimeout(() => {
         this.setState({
-          hint: undefined,
+          showHint: false,
         });
-      }, 1000);
-      return `Choose ${this.state.hint} ;)`;
-    } else {
-      return null;
+      }, 3000);
     }
   }
 
